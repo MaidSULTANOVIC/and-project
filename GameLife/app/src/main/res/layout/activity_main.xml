@@ -6,19 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
+
     >
 
 
 
-    <FrameLayout
+    <fragment
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:id="@+id/fragment_container"
-        android:name="GamesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout="@layout/fragment_games"></FrameLayout>
+        tools:layout="@layout/fragment_games"
+        android:layout_gravity="top"
+        android:layout_weight="1"
+        app:navGraph="@navigation/navigation"
+        />
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_navigation_menu"
+        android:layout_gravity="bottom"
+        android:layout_weight="0"
+        android:background="#312051"
+        app:itemTextColor="@color/white"
+
+        />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
