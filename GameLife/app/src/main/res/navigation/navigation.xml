@@ -9,10 +9,27 @@
         android:id="@+id/gamesFragment"
         android:name="com.example.gamelife.GamesFragment"
         android:label="fragment_games"
-        tools:layout="@layout/fragment_games" />
+        tools:layout="@layout/fragment_games" >
+        <action
+            android:id="@+id/action_gamesFragment_to_lolFragment"
+            app:destination="@id/lolFragment" />
+        <action
+            android:id="@+id/action_gamesFragment_to_pubgFragment"
+            app:destination="@id/pubgFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.gamelife.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/lolFragment"
+        android:name="com.example.gamelife.LolFragment"
+        android:label="fragment_lol"
+        tools:layout="@layout/fragment_lol" />
+    <fragment
+        android:id="@+id/pubgFragment"
+        android:name="com.example.gamelife.PubgFragment"
+        android:label="fragment_pubg"
+        tools:layout="@layout/fragment_pubg" />
 </navigation>
