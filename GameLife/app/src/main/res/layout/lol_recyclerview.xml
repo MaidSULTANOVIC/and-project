@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recyclerLolContainer"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/layout_bg"
+    android:backgroundTint="#DE482F75"
+    >
+
+    <TextView
+    android:id="@+id/txtTypeGame"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Ranked"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.076"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.197"
+        android:textColor="@color/white"/>
+
+
+    <TextView
+        android:id="@+id/txtChamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kassadin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTypeGame"
+        app:layout_constraintVertical_bias="0.239"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/txtWin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Defeat"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtChamp"
+        app:layout_constraintVertical_bias="1.0"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/txtKda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="22/8/12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/txtKdaRatio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="3.12 KDA"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtKda"
+        app:layout_constraintVertical_bias="0.0"
+        android:textColor="@color/white"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,6 +52,7 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
 
     RecyclerView mGameList;
     GameAdapter mGameAdapter;
+    View rootView;
 
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference dataGame = myRef.child("condition");
@@ -80,23 +82,12 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_games, container, false);
+        rootView = inflater.inflate(R.layout.fragment_games, container, false);
         games = new ArrayList<>();
-
-        Bundle bundle = getActivity().getIntent().getExtras();
-        if(bundle != null){
-            String returnGameName = bundle.getString(SelectGameActivity.NEW_GAME_NAME);
-        }
 
         FloatingActionButton fab = rootView.findViewById(R.id.floating_action_button);
         txt = rootView.findViewById(R.id.textView2);
         temp = this;
-
-
-
-
-
-
 
 
         db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -152,15 +143,6 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
             }
         });
 
-
-
-
-
-
-
-
-
-
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -181,6 +163,7 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
                 db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update(
                         strGame.substring(0,2),strGame
                 );
+                Toast.makeText(getActivity(), "Game added", Toast.LENGTH_SHORT).show();
             }
         }
     }
