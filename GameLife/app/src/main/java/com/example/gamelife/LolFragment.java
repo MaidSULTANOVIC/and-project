@@ -48,6 +48,8 @@ public class LolFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_lol, container, false);
 
+        
+
         ArrayList<LolGame> games = new ArrayList<LolGame>();
         games.add(new LolGame("Ranked","Kassadin","Defeat","22/8/12","3.12 KDA"));
         games.add(new LolGame("Ranked","Zed","Victory","12/2/6","6.12 KDA"));
