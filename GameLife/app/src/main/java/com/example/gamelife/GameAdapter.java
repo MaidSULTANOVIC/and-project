@@ -47,6 +47,14 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>{
 
     }
 
+    public Game getGame(int position){
+        return mGames.get(position);
+    }
+
+    public void addGame(Game game){
+        mGames.add(game);
+    }
+
     public interface OnListItemClickListener {
         void onListItemClick(int clickedItemIndex);
     }

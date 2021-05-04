@@ -1,5 +1,6 @@
 package com.example.gamelife;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +47,8 @@ import java.util.Map;
  */
 public class GamesFragment extends Fragment implements GameAdapter.OnListItemClickListener{
 
+
+
     RecyclerView mGameList;
     GameAdapter mGameAdapter;
 
@@ -52,6 +56,8 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
     DatabaseReference dataGame = myRef.child("condition");
     TextView txt;
     Object temp;
+    ArrayList<Game> games;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public GamesFragment() {
         // Required empty public constructor
@@ -75,12 +81,23 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_games, container, false);
+        games = new ArrayList<>();
 
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if(bundle != null){
+            String returnGameName = bundle.getString(SelectGameActivity.NEW_GAME_NAME);
+        }
+
+        FloatingActionButton fab = rootView.findViewById(R.id.floating_action_button);
         txt = rootView.findViewById(R.id.textView2);
         temp = this;
 
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+
+
+
 
         db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -89,7 +106,7 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        ArrayList<Game> games = new ArrayList<>();
+
                         Iterator it = document.getData().entrySet().iterator();
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
@@ -109,6 +126,7 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
                         mGameAdapter = new GameAdapter(games,GamesFragment.this::onListItemClick);
                         mGameList.setAdapter(mGameAdapter);
 
+
                     } else {
                         Log.d("oui", "No such document");
                     }
@@ -127,6 +145,16 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
         // Add a new document with a UID
        // db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(gamesData);
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SelectGameActivity.class);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+
+
+
 
 
 
@@ -142,15 +170,27 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
         super.onStart();
     }
 
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == -1) {
+                String strGame = data.getStringExtra(SelectGameActivity.NEW_GAME_NAME);
+                mGameAdapter.addGame(new Game(strGame));
+                mGameAdapter.notifyItemInserted(mGameAdapter.getItemCount()-1);
+                db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update(
+                        strGame.substring(0,2),strGame
+                );
+            }
+        }
+    }
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        if(clickedItemIndex == 0){
+        String mGameName = mGameAdapter.getGame(clickedItemIndex).getName();
+        if(mGameName.equals("League of legends")){
             Navigation.findNavController(getView()).navigate(R.id.action_gamesFragment_to_lolFragment);
-        }else if(clickedItemIndex == 1 ){
+        }else if(mGameName.equals("P.U.B.G")){
             Navigation.findNavController(getView()).navigate(R.id.action_gamesFragment_to_pubgFragment);
-
         }
-        Toast.makeText(getContext(), "c parti " + clickedItemIndex, Toast.LENGTH_SHORT).show();
-
     }
 }
