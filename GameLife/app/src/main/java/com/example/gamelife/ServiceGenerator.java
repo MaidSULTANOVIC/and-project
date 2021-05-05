@@ -2,6 +2,12 @@ package com.example.gamelife;
 
 import android.util.Log;
 
+import com.example.gamelife.leagueoflegends.LolApi;
+import com.example.gamelife.leagueoflegends.LolResponse;
+import com.example.gamelife.leagueoflegends.Summoner;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,22 +28,7 @@ public class ServiceGenerator {
         return lolApi;
     }
 
-    public void requestSummoner(String id) {
-        LolApi lolApi = ServiceGenerator.getLolApi();
-        Call<LolResponse> call = lolApi.getSummoner(id);
-        call.enqueue(new Callback<LolResponse>() {
-            @Override
-            public void onResponse(Call<LolResponse> call, Response<LolResponse> response) {
-                if (response.code() == 200) {
-                    Log.i("Retrofit",response.body().toString());
-                }
-            }
-            @Override
-            public void onFailure(Call<LolResponse> call, Throwable t) {
-                Log.i("Retrofit", "Something went wrong :(");
-            }
-        });
-    }
+
 
 
 

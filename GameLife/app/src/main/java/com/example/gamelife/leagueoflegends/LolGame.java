@@ -1,4 +1,4 @@
-package com.example.gamelife;
+package com.example.gamelife.leagueoflegends;
 
 public class LolGame {
 

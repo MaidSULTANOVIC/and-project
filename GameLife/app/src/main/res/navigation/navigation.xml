@@ -27,9 +27,8 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/lolFragment"
-        android:name="com.example.gamelife.LolFragment"
-        android:label="fragment_lol"
-        tools:layout="@layout/fragment_lol" />
+        android:name="com.example.gamelife.leagueoflegends.LolFragment"
+        android:label="fragment_lol" />
     <fragment
         android:id="@+id/pubgFragment"
         android:name="com.example.gamelife.PubgFragment"

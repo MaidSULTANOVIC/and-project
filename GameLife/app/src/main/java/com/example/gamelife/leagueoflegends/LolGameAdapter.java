@@ -1,4 +1,4 @@
-package com.example.gamelife;
+package com.example.gamelife.leagueoflegends;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.gamelife.R;
 
 import java.util.ArrayList;
 
@@ -42,6 +44,10 @@ public class LolGameAdapter extends RecyclerView.Adapter<LolGameAdapter.ViewHold
             holder.roundedShape.setTint(0x73D61111);
 
         }
+    }
+
+    public void addGame(LolGame lg){
+        mGames.add(lg);
     }
 
     @Override
