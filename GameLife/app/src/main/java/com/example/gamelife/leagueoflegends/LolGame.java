@@ -6,7 +6,7 @@ public class LolGame {
         return mType;
     }
 
-    public String getChampion() {
+    public int getChampion() {
         return mChampion;
     }
 
@@ -23,12 +23,12 @@ public class LolGame {
     }
 
     private String mType;
-    private String mChampion;
+    private int mChampion;
     private String mCondition;
     private String mKda;
     private String mKdaRatio;
 
-    LolGame(String type, String champion, String condition, String kda, String ratio){
+    LolGame(String type, int champion, String condition, String kda, String ratio){
         mType = type;
         mChampion = champion;
         mCondition = condition;

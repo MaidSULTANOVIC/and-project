@@ -1,9 +1,11 @@
 package com.example.gamelife.leagueoflegends;
 
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,7 +35,13 @@ public class LolGameAdapter extends RecyclerView.Adapter<LolGameAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull LolGameAdapter.ViewHolder holder, int position) {
         holder.type.setText(mGames.get(position).getType());
-        holder.champ.setText(mGames.get(position).getChampion());
+
+        if(mGames.get(position).getChampion() == 0){
+            holder.champ.setImageResource(R.drawable.nochamp);
+        }else{
+            holder.champ.setImageResource(mGames.get(position).getChampion());
+        }
+
         holder.condition.setText(mGames.get(position).getCondition());
         holder.kda.setText(mGames.get(position).getKda());
         holder.ratio.setText(mGames.get(position).getKdaRatio());
@@ -57,7 +65,7 @@ public class LolGameAdapter extends RecyclerView.Adapter<LolGameAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView type;
-        TextView champ;
+        ImageView champ;
         TextView condition;
         TextView kda;
         TextView ratio;

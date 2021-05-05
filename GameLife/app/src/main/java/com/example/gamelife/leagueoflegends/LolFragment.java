@@ -1,5 +1,6 @@
 package com.example.gamelife.leagueoflegends;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -43,6 +44,7 @@ public class LolFragment extends Fragment {
     private TextView txtTier;
     private TextView txtLP;
     private TextView txtPercentage;
+    private ImageView imageRank;
 
     public LolFragment() {
         // Required empty public constructor
@@ -72,6 +74,7 @@ public class LolFragment extends Fragment {
         txtTier = rootView.findViewById(R.id.txtRank);
         txtLP = rootView.findViewById(R.id.txtLp);
         txtPercentage = rootView.findViewById(R.id.txtRatio);
+        imageRank = rootView.findViewById(R.id.imageRank);
 
         viewModel.getSearchedLolAccount().observe(getViewLifecycleOwner(), lolAccount -> {
             id = lolAccount.getmId();
@@ -110,9 +113,8 @@ public class LolFragment extends Fragment {
             }catch(NumberFormatException e){
                 kdaRatio = "Perfect KDA";
             }
-
-
-            mLolGameAdapter.addGame(new LolGame(gameMode,champId+"",win,kda,kdaRatio));
+            int drawableId = getActivity().getResources().getIdentifier(Champions.getChampion(champId).toLowerCase()+"_0","drawable",getActivity().getPackageName());
+            mLolGameAdapter.addGame(new LolGame(gameMode,drawableId,win,kda,kdaRatio));
             mLolGameAdapter.notifyItemInserted(mLolGameAdapter.getItemCount()-1);
         });
 
@@ -132,7 +134,8 @@ public class LolFragment extends Fragment {
             int ratio = (int)(((double)win/(double)(win+losse))*100);
 
             txtPercentage.setText(ratio+"%");
-
+            int drawableId = getActivity().getResources().getIdentifier("emblem_"+summoner.getmTier().toLowerCase(),"drawable",getActivity().getPackageName());
+            imageRank.setImageResource(drawableId);
             //TODO Change picture with rank
         });
 
