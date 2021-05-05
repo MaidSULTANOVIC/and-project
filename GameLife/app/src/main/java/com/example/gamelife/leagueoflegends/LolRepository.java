@@ -15,11 +15,13 @@ import retrofit2.Response;
 
 public class LolRepository {
     private static LolRepository instance;
+    private final MutableLiveData<LolAccount> searchedAccount;
     private final MutableLiveData<Summoner> searchedSummoner;
     private final MutableLiveData<MatchList> searchedMatchList;
     private final MutableLiveData<MatchDetail> searchedMatchDetail;
 
     private LolRepository(){
+        searchedAccount = new MutableLiveData<>();
         searchedSummoner = new MutableLiveData<>();
         searchedMatchList = new MutableLiveData<>();
         searchedMatchDetail = new MutableLiveData<>();
@@ -31,7 +33,9 @@ public class LolRepository {
         }
         return instance;
     }
-
+    public LiveData<LolAccount> getSearchedAccount(){
+        return searchedAccount;
+    }
     public LiveData<Summoner> getSearchedSummoner(){
         return searchedSummoner;
     }
@@ -40,6 +44,28 @@ public class LolRepository {
     }
     public LiveData<MatchDetail> getSearchedMatchDetail(){
         return searchedMatchDetail;
+    }
+
+    public void searchForAccount(String name){
+        LolApi lolApi = ServiceGenerator.getLolApi();
+        Call<AccountResponse> call = lolApi.getAccount(name);
+
+        call.enqueue(new Callback<AccountResponse>() {
+            @Override
+            public void onResponse(Call<AccountResponse> call, Response<AccountResponse> response) {
+                if (response.code() == 200) {
+                    searchedAccount.setValue(response.body().getAccount());
+                    Log.i("Retrofit", "NORMALEMENT C BON");
+                }
+            }
+            @Override
+            public void onFailure(Call<AccountResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong :(" + t.getMessage());
+            }
+        });
+
+
+
     }
 
     public void searchForSummoner(String id){

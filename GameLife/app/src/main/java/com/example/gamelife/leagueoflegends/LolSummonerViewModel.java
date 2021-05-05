@@ -35,4 +35,12 @@ public class LolSummonerViewModel extends ViewModel
         repository.searchForMatchDetail(matchId);
     }
 
+    LiveData<LolAccount> getSearchedLolAccount(){
+        return repository.getSearchedAccount();
+    }
+
+    public void searchForLolAccount(String name){
+        repository.searchForAccount(name);
+    }
+
 }

@@ -37,6 +37,8 @@ public class LolFragment extends Fragment {
     LolGameAdapter mLolGameAdapter;
     View rootView;
     private LolSummonerViewModel viewModel;
+    private String id;
+    private String accountId;
 
     private TextView txtTier;
     private TextView txtLP;
@@ -70,6 +72,13 @@ public class LolFragment extends Fragment {
         txtTier = rootView.findViewById(R.id.txtRank);
         txtLP = rootView.findViewById(R.id.txtLp);
         txtPercentage = rootView.findViewById(R.id.txtRatio);
+
+        viewModel.getSearchedLolAccount().observe(getViewLifecycleOwner(), lolAccount -> {
+            id = lolAccount.getmId();
+            accountId = lolAccount.getmAccountId();
+            searchSummoner();
+            searchMatchList();
+        });
 
         viewModel.getSearchedMatchDetail().observe(getViewLifecycleOwner(),matchDetail -> {
             Log.i("ARRIVER",matchDetail.getmParticipantIdentities().get(0).getPlayer().getSummonerName()+"");
@@ -127,8 +136,8 @@ public class LolFragment extends Fragment {
             //TODO Change picture with rank
         });
 
-        searchSummoner();
-        searchMatchList();
+        searchAccount();
+
 
         ArrayList<LolGame> games = new ArrayList<LolGame>();
 
@@ -147,12 +156,16 @@ public class LolFragment extends Fragment {
         return rootView;
     }
 
+    public void searchAccount(){
+        viewModel.searchForLolAccount("Ermelinda83F");
+    }
+
     public void searchSummoner(){
-        viewModel.searchForSummoner("qggrk6urUfmuxi8ZZVZVIapLVN82pXPmt9KEysXUMPnrLqpo");
+        viewModel.searchForSummoner(id);
     }
 
     public void searchMatchList(){
-        viewModel.searchForMatchList("cvQODNLiRRx7C4OLS0izQeXlEitS_knjHEFyn3T0wzb9mFuJR1HUZ5dQ");
+        viewModel.searchForMatchList(accountId);
     }
 
     public void searchMatchDetail(long matchId){

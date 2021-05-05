@@ -8,6 +8,9 @@ import retrofit2.http.Path;
 
 public interface LolApi {
 
+        @GET("/lol/summoner/v4/summoners/by-name/{summonerName}?api_key=RGAPI-4aa70594-3541-467d-8c9f-2bf69e340f06")
+        Call<AccountResponse> getAccount(@Path("summonerName") String name);
+
         @GET("/lol/league/v4/entries/by-summoner/{encryptedSummonerId}?api_key=RGAPI-4aa70594-3541-467d-8c9f-2bf69e340f06")
         Call<List<LolResponse>> getSummoner(@Path("encryptedSummonerId") String id);
 
