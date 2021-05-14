@@ -13,8 +13,11 @@ import com.example.gamelife.leagueoflegends.models.LolAccount;
 import com.example.gamelife.leagueoflegends.models.MatchDetail;
 import com.example.gamelife.leagueoflegends.models.MatchList;
 import com.example.gamelife.leagueoflegends.models.Summoner;
+import com.example.gamelife.pubg.models.gameData.PubgMatchData;
 import com.example.gamelife.pubg.models.playerInfo.PlayerInfo;
 import com.example.gamelife.pubg.models.playerStats.PubgPlayerStats;
+import com.example.gamelife.pubg.models.ranked.PubgRanked;
+import com.example.gamelife.pubg.models.season.PubgSeason;
 
 import java.util.List;
 
@@ -26,10 +29,16 @@ public class PubgRepository {
     private static PubgRepository instance;
     private final MutableLiveData<PlayerInfo> searchedAccount;
     private final MutableLiveData<PubgPlayerStats> searchedPlayerStats;
+    private final MutableLiveData<PubgMatchData> searchedMatchData;
+    private final MutableLiveData<PubgSeason> searchedSeason;
+    private final MutableLiveData<PubgRanked> searchedRanked;
 
     private PubgRepository(){
         searchedAccount = new MutableLiveData<>();
         searchedPlayerStats = new MutableLiveData<>();
+        searchedMatchData = new MutableLiveData<>();
+        searchedSeason = new MutableLiveData<>();
+        searchedRanked = new MutableLiveData<>();
 
     }
 
@@ -45,6 +54,15 @@ public class PubgRepository {
     }
     public LiveData<PubgPlayerStats> getSearchedPlayerStats(){
         return searchedPlayerStats;
+    }
+    public LiveData<PubgMatchData> getSearchedMatchData(){
+        return searchedMatchData;
+    }
+    public LiveData<PubgSeason> getSearchedSeason(){
+        return searchedSeason;
+    }
+    public LiveData<PubgRanked> getSearchedRanked(){
+        return searchedRanked;
     }
 
 
@@ -95,6 +113,85 @@ public class PubgRepository {
             }
             @Override
             public void onFailure(Call<PubgStatsResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong :(" + t.getMessage());
+            }
+        });
+
+    }
+
+    public void searchForMatchData(String matchId){
+        //A new LolApi object is created
+        PubgApi pubgApi = ServiceGeneratorPubg.getPubgApi();
+
+        //We use lolApi's api link to use it to fetch data
+        Call<PubgMatchResponse> call = pubgApi.getMatchDetail(matchId);
+
+
+        //Fetch data
+        call.enqueue(new Callback<PubgMatchResponse>() {
+            @Override
+            public void onResponse(Call<PubgMatchResponse> call, Response<PubgMatchResponse> response) {
+                //If data is received, setValue for searchedAccount to the json response
+                if (response.code() == 200) {
+                    searchedMatchData.setValue(response.body().getMatchData());
+                }
+            }
+            @Override
+            public void onFailure(Call<PubgMatchResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong :(" + t.getMessage());
+            }
+        });
+
+
+
+    }
+
+    public void searchForSeason(){
+        //A new LolApi object is created
+        PubgApi pubgApi = ServiceGeneratorPubg.getPubgApi();
+
+        //We use lolApi's api link to use it to fetch data
+        Call<PubgSeasonResponse> call = pubgApi.getSeason();
+
+
+        //Fetch data
+        call.enqueue(new Callback<PubgSeasonResponse>() {
+            @Override
+            public void onResponse(Call<PubgSeasonResponse> call, Response<PubgSeasonResponse> response) {
+                //If data is received, setValue for searchedAccount to the json response
+                if (response.code() == 200) {
+                    searchedSeason.setValue(response.body().getPubgSeason());
+                }
+            }
+            @Override
+            public void onFailure(Call<PubgSeasonResponse> call, Throwable t) {
+                Log.i("Retrofit", "Something went wrong :(" + t.getMessage());
+            }
+        });
+
+
+
+    }
+
+    public void searchForRanked(String accountId, String seasonId){
+        //A new LolApi object is created
+        PubgApi pubgApi = ServiceGeneratorPubg.getPubgApi();
+
+        //We use lolApi's api link to use it to fetch data
+        Call<PubgRankedResponse> call = pubgApi.getRanked(accountId,seasonId);
+
+
+        //Fetch data
+        call.enqueue(new Callback<PubgRankedResponse>() {
+            @Override
+            public void onResponse(Call<PubgRankedResponse> call, Response<PubgRankedResponse> response) {
+                //If data is received, setValue for searchedAccount to the json response
+                if (response.code() == 200) {
+                    searchedRanked.setValue(response.body().getPubgRanked());
+                }
+            }
+            @Override
+            public void onFailure(Call<PubgRankedResponse> call, Throwable t) {
                 Log.i("Retrofit", "Something went wrong :(" + t.getMessage());
             }
         });

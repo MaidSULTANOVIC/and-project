@@ -23,6 +23,8 @@ public class PubgFragment extends Fragment {
 
     private PubgViewModel viewModel;
 
+    private String accountId;
+
     public PubgFragment() {
         // Required empty public constructor
     }
@@ -45,19 +47,38 @@ public class PubgFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
-
-
         viewModel.getSearchedAccount().observe(getViewLifecycleOwner(),playerInfo -> {
             Log.d("test",playerInfo.getPlayerId());
+
+            accountId = playerInfo.getPlayerId();
             viewModel.searchForPlayerStats(playerInfo.getPlayerId());
+            Log.d("Test", "Game data : " + playerInfo.getGameList().get(2).getId());
+            viewModel.searchForMatchData(playerInfo.getGameList().get(2).getId());
         });
 
         viewModel.getSearchedPlayerStats().observe(getViewLifecycleOwner(), pubgPlayerStats -> {
-            Log.d("test", pubgPlayerStats.getSquad().getKills() + " ");
+            Log.d("test", pubgPlayerStats.getSquad().getKills() + " Kills");
+        });
+
+        viewModel.getSearchedMatchData().observe(getViewLifecycleOwner(),pubgMatchData -> {
+            Log.d("test",pubgMatchData.getPlayerList().get(1).getAttributes().getStats().getName());
+        });
+
+        viewModel.getSearchedSeason().observe(getViewLifecycleOwner(), pubgSeason -> {
+            Log.d("test",pubgSeason.getId() + " SEASON ID");
+            viewModel.searchForRanked(accountId,pubgSeason.getId());
+
+        });
+
+        viewModel.getSearchedRanked().observe(getViewLifecycleOwner(), pubgRanked -> {
+            Log.d("Test", pubgRanked.getSubTier() + " RANK");
         });
 
         viewModel.searchForAccount("DaMowangIili");
+        viewModel.searchForSeason();
+
+
+
 
 
         // Inflate the layout for this fragment

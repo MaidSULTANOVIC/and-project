@@ -3,6 +3,7 @@ import com.example.gamelife.leagueoflegends.AccountResponse;
 import com.example.gamelife.leagueoflegends.LolResponse;
 import com.example.gamelife.leagueoflegends.MatchDetailResponse;
 import com.example.gamelife.leagueoflegends.MatchListResponse;
+import com.example.gamelife.pubg.models.gameData.PubgMatchData;
 
 import java.util.List;
 
@@ -29,9 +30,26 @@ public interface PubgApi {
     @GET("/shards/steam/players/{accountId}/seasons/lifetime")
     Call<PubgStatsResponse> getStats(@Path("accountId") String accountId, @Query("filter[gamepad]") String gamePad);
 
-    @GET("/lol/match/v4/matchlists/by-account/{encryptedAccountId}?api_key=RGAPI-48bd8999-3b1e-4627-a4b5-109ba0132a0b")
-    Call<MatchListResponse> getMatchList(@Path("encryptedAccountId") String accountId);
 
-    @GET("/lol/match/v4/matches/{matchId}?api_key=RGAPI-48bd8999-3b1e-4627-a4b5-109ba0132a0b")
-    Call<MatchDetailResponse> getMatchDetail(@Path("matchId") long matchId);
+    @Headers({
+            "Accept: application/vnd.api+json"
+    })
+    @GET("/shards/steam/matches/{matchId}")
+    Call<PubgMatchResponse> getMatchDetail(@Path("matchId") String matchId);
+
+
+    @Headers({
+            "Accept: application/vnd.api+json",
+            "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0YTgzZjIwMC05NjJjLTAxMzktMGNjNy0xZGRmYTY2NTE1OTkiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjIwOTE5MDY0LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6ImdhbWVsaWZlIn0.Wiz632qc7Y59Pf1lBVl1cNpcqNQzydKpxhC9Evezdq0"
+    })
+    @GET("/shards/steam/seasons")
+    Call<PubgSeasonResponse> getSeason();
+    //TODO FIX THIS
+
+    @Headers({
+            "Accept: application/vnd.api+json",
+            "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI0YTgzZjIwMC05NjJjLTAxMzktMGNjNy0xZGRmYTY2NTE1OTkiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjIwOTE5MDY0LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6ImdhbWVsaWZlIn0.Wiz632qc7Y59Pf1lBVl1cNpcqNQzydKpxhC9Evezdq0"
+    })
+    @GET("/shards/steam/players/{accountId}/seasons/{seasonId}/ranked")
+    Call<PubgRankedResponse> getRanked(@Path("accountId") String accountId, @Path("seasonId") String seasonId);
 }
