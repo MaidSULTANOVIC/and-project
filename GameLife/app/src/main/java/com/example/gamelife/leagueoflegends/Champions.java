@@ -1,7 +1,15 @@
 package com.example.gamelife.leagueoflegends;
 
+/**
+ * This class is the list of every champions that exist in League of Legends
+ */
 public class Champions {
 
+    /**
+     * This function will return the name of the champion given its id
+     * @param id champion id
+     * @return
+     */
     public static String getChampion(int id){
         switch (id){
             case 1:

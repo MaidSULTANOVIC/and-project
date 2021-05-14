@@ -27,11 +27,11 @@
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/lolFragment"
-        android:name="com.example.gamelife.leagueoflegends.LolFragment"
+        android:name="com.example.gamelife.leagueoflegends.ui.fragment.LolFragment"
         android:label="fragment_lol" />
     <fragment
         android:id="@+id/pubgFragment"
-        android:name="com.example.gamelife.PubgFragment"
+        android:name="com.example.gamelife.pubg.PubgFragment"
         android:label="fragment_pubg"
         tools:layout="@layout/fragment_pubg" />
     <fragment

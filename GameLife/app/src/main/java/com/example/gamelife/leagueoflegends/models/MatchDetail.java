@@ -1,7 +1,13 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.models;
 
 import java.util.ArrayList;
 
+/**
+ * MatchDetail is used to contain a match full detail, including the participants and their identities
+ * @param gameMode gameMode of the game
+ * @param participants a list of the players in the game
+ * @param participantIdentities a list of the identities of the players
+ */
 public class MatchDetail {
 
     private String mGameMode;

@@ -1,5 +1,8 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.models;
 
+/**
+ * This class contains data concerning the user stats including kills, deaths, assists and the condition of the game
+ */
 public class LolStat {
     private boolean win;
     private int kills;

@@ -1,22 +1,22 @@
-package com.example.gamelife;
+package com.example.gamelife.pubg;
 
 import com.example.gamelife.leagueoflegends.LolApi;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ServiceGenerator {
+public class ServiceGeneratorPubg {
 
     private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-            .baseUrl("https://euw1.api.riotgames.com")
+            .baseUrl("https://api.pubg.com")
             .addConverterFactory(GsonConverterFactory.create());
 
     private static Retrofit retrofit = retrofitBuilder.build();
 
-    private static LolApi lolApi = retrofit.create(LolApi.class);
+    private static PubgApi pubgApi = retrofit.create(PubgApi.class);
 
-    public static LolApi getLolApi() {
-        return lolApi;
+    public static PubgApi getPubgApi() {
+        return pubgApi;
     }
 
 

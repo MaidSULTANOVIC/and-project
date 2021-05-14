@@ -1,8 +1,13 @@
 package com.example.gamelife.leagueoflegends;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.gamelife.leagueoflegends.models.MatchDetail;
+import com.example.gamelife.leagueoflegends.models.Participant;
+import com.example.gamelife.leagueoflegends.models.ParticipantIdentities;
 
+import java.util.ArrayList;
+
+
+// This class is used to store the response from the fetch, it will contain a match detail
 public class MatchDetailResponse {
     private String gameMode;
     private ArrayList<Participant> participants;
@@ -11,10 +16,5 @@ public class MatchDetailResponse {
     public MatchDetail getMatchDetail(){
         return new MatchDetail(gameMode,participants,participantIdentities);
     }
-
-
-
-   // private List<List<Team>> teams;
-
 
 }

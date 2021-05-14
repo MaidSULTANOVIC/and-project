@@ -1,8 +1,13 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.models;
+
+import com.example.gamelife.leagueoflegends.models.MatchInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * MatchList is a class that contains the list of the last games played by the user
+ * @param matches the list of the games played
+ */
 public class MatchList {
 
     private ArrayList<MatchInfo> mMatches;

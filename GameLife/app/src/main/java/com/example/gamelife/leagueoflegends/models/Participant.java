@@ -1,7 +1,10 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.models;
 
-import com.google.common.math.Stats;
+import com.example.gamelife.leagueoflegends.models.LolStat;
 
+/**
+ * Participant contains the data for a specific player in a game
+ */
 public class Participant {
     private int teamId;
     private int participantId;

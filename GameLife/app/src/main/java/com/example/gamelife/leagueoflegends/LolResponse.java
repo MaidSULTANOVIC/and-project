@@ -1,5 +1,10 @@
 package com.example.gamelife.leagueoflegends;
 
+import com.example.gamelife.leagueoflegends.models.Summoner;
+
+/**
+ * LolResponse contains data for the user summonerStat
+ */
 public class LolResponse {
 
     private int wins;

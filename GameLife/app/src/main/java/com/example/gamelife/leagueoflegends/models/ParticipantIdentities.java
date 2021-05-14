@@ -1,7 +1,9 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.models;
 
-import java.util.ArrayList;
 
+/**
+ * ParticipantIdentities contains identity for a specific player in a game
+ */
 public class ParticipantIdentities {
     private Player player;
     private int participantId;

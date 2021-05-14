@@ -1,17 +1,27 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.ui.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.gamelife.leagueoflegends.models.LolAccount;
+import com.example.gamelife.leagueoflegends.LolRepository;
+import com.example.gamelife.leagueoflegends.models.MatchDetail;
+import com.example.gamelife.leagueoflegends.models.MatchList;
+import com.example.gamelife.leagueoflegends.models.Summoner;
+
+/**
+ * LolViewModel
+ */
 public class LolSummonerViewModel extends ViewModel
 {
     LolRepository repository;
 
+    //Create a new instance of lolRepo
     public LolSummonerViewModel(){
         repository = LolRepository.getInstance();
     }
 
-    LiveData<Summoner> getSearchedSummoner(){
+    public LiveData<Summoner> getSearchedSummoner(){
         return repository.getSearchedSummoner();
     }
 
@@ -19,7 +29,7 @@ public class LolSummonerViewModel extends ViewModel
         repository.searchForSummoner(id);
     }
 
-    LiveData<MatchList> getSearchedMatchList(){
+    public LiveData<MatchList> getSearchedMatchList(){
         return repository.getSearchedMatchList();
     }
 
@@ -27,7 +37,7 @@ public class LolSummonerViewModel extends ViewModel
         repository.searchForMatchList(summonerId);
     }
 
-    LiveData<MatchDetail> getSearchedMatchDetail(){
+    public LiveData<MatchDetail> getSearchedMatchDetail(){
         return repository.getSearchedMatchDetail();
     }
 
@@ -35,7 +45,7 @@ public class LolSummonerViewModel extends ViewModel
         repository.searchForMatchDetail(matchId);
     }
 
-    LiveData<LolAccount> getSearchedLolAccount(){
+    public LiveData<LolAccount> getSearchedLolAccount(){
         return repository.getSearchedAccount();
     }
 

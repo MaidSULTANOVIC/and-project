@@ -1,5 +1,13 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.models;
 
+/**
+ * Summoner contains every data about the user's account, this includes the number of its losses and wins with his rank and league points.
+ * @param wins number of win
+ * @param losses number of lose
+ * @param tier rank tier of the user
+ * @param rank rank of the user
+ * @param lp number of league point of the user
+ */
 public class Summoner {
 
     private int mWins;
