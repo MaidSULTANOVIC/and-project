@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LolFragment"
-    android:background="#211833">
+    android:background="@color/purple_dark">
 
     <LinearLayout
 
@@ -47,7 +47,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/layout_bg"
-            android:backgroundTint="#DD312051">
+            android:backgroundTint="@color/purple_light">
 
             <ImageView
                 android:id="@+id/imageRank"

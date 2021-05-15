@@ -6,12 +6,12 @@
     <item
         android:id="@+id/gamesFragment"
         android:enabled="true"
-        android:icon="@drawable/common_google_signin_btn_icon_light_normal"
+        android:icon="@drawable/ic_game"
         android:title="Games"/>
     <item
         android:id="@+id/settingsFragment"
         android:enabled="true"
-        android:icon="@drawable/common_google_signin_btn_icon_light_normal"
+        android:icon="@drawable/ic_settings"
         android:title="Settings"
 
         />

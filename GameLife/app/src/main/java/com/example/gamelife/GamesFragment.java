@@ -35,6 +35,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,6 +90,10 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
         txt = rootView.findViewById(R.id.textView2);
         temp = this;
 
+        mGameAdapter = new GameAdapter(games,this::onListItemClick);
+
+        db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(new HashMap<String,Object>(),SetOptions.merge());
+
 
         db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -130,7 +135,7 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
 
         Map<String, Object> gamesData = new HashMap<>();
         gamesData.put("lol", "League of legends");
-        gamesData.put("pubg", "P.U.B.G");
+        gamesData.put("pubg", "PUBG");
         gamesData.put("ow", "Overwatch");
 
         // Add a new document with a UID
@@ -157,11 +162,17 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == -1) {
+                Log.d("TEST", data.getStringExtra(SelectGameActivity.NEW_GAME_NAME));
                 String strGame = data.getStringExtra(SelectGameActivity.NEW_GAME_NAME);
                 mGameAdapter.addGame(new Game(strGame));
                 mGameAdapter.notifyItemInserted(mGameAdapter.getItemCount()-1);
-                db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update(
-                        strGame.substring(0,2),strGame
+                Log.d("TEST", "on est là");
+
+                Map<String, Object> newGame = new HashMap<>();
+                newGame.put(strGame.substring(0,2),strGame);
+
+                db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(
+                        newGame, SetOptions.merge()
                 );
                 Toast.makeText(getActivity(), "Game added", Toast.LENGTH_SHORT).show();
             }
@@ -172,7 +183,7 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
         String mGameName = mGameAdapter.getGame(clickedItemIndex).getName();
         if(mGameName.equals("League of legends")){
             Navigation.findNavController(getView()).navigate(R.id.action_gamesFragment_to_lolFragment);
-        }else if(mGameName.equals("P.U.B.G")){
+        }else if(mGameName.equals("PUBG")){
             Navigation.findNavController(getView()).navigate(R.id.action_gamesFragment_to_pubgFragment);
         }
     }

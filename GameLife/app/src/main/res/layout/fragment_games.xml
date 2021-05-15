@@ -41,7 +41,10 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:backgroundTint="#312051"
-        app:borderWidth="0px"/>
+        app:borderWidth="0px"
+        android:src="@drawable/ic_add"
+        app:tint="@color/white"
+        />
 
 
 </FrameLayout>
