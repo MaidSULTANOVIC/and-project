@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,12 +13,164 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="PUBG"
-            android:textColor="@color/white"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editTextTextPubg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:inputType="textPersonName"
+                android:text="Enter your username"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/buttonRefreshPubg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:drawableLeft="@drawable/ic_refresh"
+                android:text="" />
+
+        </LinearLayout>
+
+        <!-- TODO: Update blank fragment layout -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/layout_bg"
+            android:backgroundTint="#DD312051">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ranked"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtRankPointPubg"
+                app:layout_constraintHorizontal_bias="0.355"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.06999999" />
+
+            <TextView
+                android:id="@+id/txtRankPointPubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5,000"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.291"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/txtRankPubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Master 1"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.277"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtRankPointPubg"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Win %"
+                android:textColor="#ACA9A9"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtPercPubg"
+                app:layout_constraintHorizontal_bias="0.89"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtRankPubg"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/txtPercPubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="46.6%"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.293"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtRankPubg"
+                app:layout_constraintVertical_bias="0.45" />
+
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Top 10 %"
+                android:textColor="#ACA9A9"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtTop10Pubg"
+                app:layout_constraintHorizontal_bias="0.84"
+                app:layout_constraintStart_toEndOf="@+id/txtPercPubg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.897" />
+
+            <TextView
+                android:id="@+id/txtTop10Pubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="76%"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.471"
+                app:layout_constraintStart_toEndOf="@+id/txtPercPubg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.897" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="KDA"
+                android:textColor="#ACA9A9"
+                app:layout_constraintBottom_toTopOf="@+id/textView9"
+                app:layout_constraintEnd_toStartOf="@+id/txtKdaPubg"
+                app:layout_constraintHorizontal_bias="0.927"
+                app:layout_constraintStart_toEndOf="@+id/txtRankPubg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.48" />
+
+            <TextView
+                android:id="@+id/txtKdaPubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7.53"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/txtTop10Pubg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.47"
+                app:layout_constraintStart_toEndOf="@+id/txtRankPointPubg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.51" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,6 +178,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/buttonSquadPubg"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Squad"
@@ -32,12 +186,14 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="5dp"/>
             <Button
+                android:id="@+id/buttonSoloPubg"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Solo"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"/>
             <Button
+                android:id="@+id/buttonDuoPubg"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="Duo"
@@ -47,22 +203,133 @@
 
         </LinearLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/layout_bg"
-        android:backgroundTint="#DD312051">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/layout_bg"
+            android:backgroundTint="#DD312051">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Duo"
-            android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/txtModePubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Squad"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.049"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.038" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Damage dealt"
+                android:textColor="#ACA9A9"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtDamagePubg"
+                app:layout_constraintHorizontal_bias="0.913"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.207" />
+
+            <TextView
+                android:id="@+id/txtDamagePubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5433.34"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.512"
+                app:layout_constraintStart_toEndOf="@+id/txtModePubg"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.207" />
+
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kills"
+                android:textColor="#ACA9A9"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtKillsPubg"
+                app:layout_constraintHorizontal_bias="0.843"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
+                app:layout_constraintVertical_bias="0.094" />
+
+            <TextView
+                android:id="@+id/txtKillsPubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="54"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.594"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtDamagePubg"
+                app:layout_constraintVertical_bias="0.095" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Boosts"
+                android:textColor="#ACA9A9"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtBoostsPubg"
+                app:layout_constraintHorizontal_bias="0.825"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView13"
+                app:layout_constraintVertical_bias="0.172" />
+
+            <TextView
+                android:id="@+id/txtBoostsPubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="150"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.608"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtKillsPubg"
+                app:layout_constraintVertical_bias="0.157" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wins"
+                android:textColor="#ACA9A9"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtWinsPubg"
+                app:layout_constraintHorizontal_bias="0.839"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView14"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/txtWinsPubg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="74"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.594"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtBoostsPubg"
+                app:layout_constraintVertical_bias="0.0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

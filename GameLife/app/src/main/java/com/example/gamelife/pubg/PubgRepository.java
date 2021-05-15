@@ -160,6 +160,7 @@ public class PubgRepository {
             public void onResponse(Call<PubgSeasonResponse> call, Response<PubgSeasonResponse> response) {
                 //If data is received, setValue for searchedAccount to the json response
                 if (response.code() == 200) {
+                    Log.d("Test"," into 200");
                     searchedSeason.setValue(response.body().getPubgSeason());
                 }
             }
