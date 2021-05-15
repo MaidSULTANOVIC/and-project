@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,16 +52,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        bar = getSupportActionBar();
-        bar.setTitle("Games");
-        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#312051")));
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        navController = Navigation.findNavController(this, R.id.fragment_container);
+            Intent myIntent = new Intent(this, LoginActivity.class);
+            startActivity(myIntent);
+            finish();
 
-        NavigationUI.setupWithNavController(bottomNavigationView,navController);
+            //setContentView(R.layout.activity_login);
+       }else{
+            setContentView(R.layout.activity_main);
+
+            bar = getSupportActionBar();
+            bar.setTitle("Games");
+            bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#312051")));
+
+            bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+            navController = Navigation.findNavController(this, R.id.fragment_container);
+
+            NavigationUI.setupWithNavController(bottomNavigationView,navController);
+        }
+
+
 
 
     }

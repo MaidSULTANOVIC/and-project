@@ -1,5 +1,7 @@
 package com.example.gamelife;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,43 +16,48 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static android.view.View.VISIBLE;
+
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private TextView txtView;
+    private TextView txtError;
+    private Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
-
-        GamesFragment fragment = GamesFragment.newInstance();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction =
-                fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, fragment);
-        fragmentTransaction.commit();
-
-
+        context = this.getApplicationContext();
 
         mAuth = FirebaseAuth.getInstance();
 
         EditText mailTxt = (EditText) findViewById(R.id.editTextTextPersonName);
         EditText passwordTxt = (EditText) findViewById(R.id.editTextTextPassword);
 
-        txtView = (TextView) findViewById(R.id.textView);
-        Button clickButton = (Button) findViewById(R.id.button);
-        clickButton.setOnClickListener( new View.OnClickListener() {
+        txtError = (TextView) findViewById(R.id.txtError);
+
+        Button registerButton = (Button) findViewById(R.id.buttonRegister);
+        Button loginButton = (Button) findViewById(R.id.buttonLogin);
+
+
+        loginButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount(mailTxt.getText().toString(),passwordTxt.getText().toString());
+                loginAccount(mailTxt.getText().toString(),passwordTxt.getText().toString());
             }
+        });
+
+        registerButton.setOnClickListener(v -> {
+            createAccount(mailTxt.getText().toString(), passwordTxt.getText().toString());
         });
     }
 
@@ -68,26 +75,55 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void createAccount(String email, String password){
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d("Signout", "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            txtView.setText(user.getEmail());
+        try{
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Intent myIntent = new Intent(context, MainActivity.class);
+                                startActivity(myIntent);
+                                finish();
 
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w("Signout", "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            txtView.setText("ERROR");
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                txtError.setText(task.getException().getMessage());
+                                txtError.setVisibility(VISIBLE);
+                            }
+
+                            // ...
                         }
+                    });
+        }catch (Exception e){
+            txtError.setText("Username/Password error");
+            txtError.setVisibility(VISIBLE);
+        }
 
-                        // ...
+    }
+
+    public void loginAccount(String email, String password){
+        try{
+            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Intent myIntent = new Intent(context, MainActivity.class);
+                        startActivity(myIntent);
+                        finish();
+
+                    } else {
+                        txtError.setText(task.getException().getMessage());
+                        txtError.setVisibility(VISIBLE);
                     }
-                });
+
+                }
+
+            });
+        }catch (Exception e){
+            txtError.setText("Username/Password error");
+            txtError.setVisibility(VISIBLE);
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.gamelife.pubg;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,8 @@ public class PubgFragment extends Fragment {
     private View rootView;
     private PubgViewModel viewModel;
 
+    private TextView txtUsername;
+
     private TextView txtPoint;
     private TextView txtRank;
     private TextView txtWinPerc;
@@ -44,8 +47,6 @@ public class PubgFragment extends Fragment {
     private Button buttonDuo;
 
     private PubgPlayerStats pubgStats;
-
-    private int index;
 
     private String accountId;
 
@@ -72,7 +73,9 @@ public class PubgFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_pubg, container, false);
-        index = 0;
+
+        Button buttonRefresh = rootView.findViewById(R.id.buttonRefreshPubg);
+        txtUsername = rootView.findViewById(R.id.editTextPubg);
 
         txtPoint = rootView.findViewById(R.id.txtRankPointPubg);
         txtRank = rootView.findViewById(R.id.txtRankPubg);
@@ -134,23 +137,38 @@ public class PubgFragment extends Fragment {
             txtRank.setText(pubgRanked.getTier()+pubgRanked.getSubTier());
         });
 
-        searchForAccount();
+        searchAccount();
+
+
+
+
+        buttonRefresh.setOnClickListener(v -> {
+
+            SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPreferences", this.getActivity().MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("pubgName", txtUsername.getText().toString());
+            editor.apply();
+
+            txtUsername.clearFocus();
+            searchAccount();
+
+        });
 
 
 
         buttonSquad.setOnClickListener(v -> {
-            index = 0;
-            refreshGameMode();
+
+            refreshGameMode(0);
         });
 
         buttonDuo.setOnClickListener(v -> {
-            index = 2;
-            refreshGameMode();
+
+            refreshGameMode(2);
         });
 
         buttonSolo.setOnClickListener(v -> {
-            index = 1;
-            refreshGameMode();
+
+            refreshGameMode(1);
         });
 
 
@@ -159,7 +177,7 @@ public class PubgFragment extends Fragment {
     }
 
 
-    private void refreshGameMode(){
+    private void refreshGameMode(int index){
         //Squad
         if(index == 0){
             txtMode.setText("Squad");
@@ -187,7 +205,12 @@ public class PubgFragment extends Fragment {
         }
     }
 
-    private void searchForAccount(){
-        viewModel.searchForAccount("DaMowangIili");
+    private void searchAccount(){
+        //I retrieve in local storage the username for this game
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPreferences", 0);
+        String userName = prefs.getString("pubgName", "Enter your username");
+        txtUsername.setText(userName);
+
+        viewModel.searchForAccount(userName);
     }
 }
