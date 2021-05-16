@@ -1,8 +1,11 @@
 package com.example.gamelife;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -15,6 +18,10 @@ public class SelectGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_game);
 
+
+        ActionBar bar = getSupportActionBar();
+        bar.setTitle("Add new game");
+        bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#312051")));
 
         Button button = findViewById(R.id.button2);
         Button buttonPubg = findViewById(R.id.buttonSelectPubg);

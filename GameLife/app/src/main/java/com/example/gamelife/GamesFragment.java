@@ -187,4 +187,5 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
             Navigation.findNavController(getView()).navigate(R.id.action_gamesFragment_to_pubgFragment);
         }
     }
+
 }

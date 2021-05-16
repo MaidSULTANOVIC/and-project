@@ -3,6 +3,8 @@ package com.example.gamelife.leagueoflegends.ui.fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -80,6 +84,10 @@ public class LolFragment extends Fragment {
 
 
         rootView = inflater.inflate(R.layout.fragment_lol, container, false);
+
+        ActionBar bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        bar.setTitle("League of legends");
+
 
         //Init the different view and component of the page
         txtTier = rootView.findViewById(R.id.txtRank);
@@ -242,7 +250,6 @@ public class LolFragment extends Fragment {
     public void searchMatchDetail(long matchId){
         viewModel.searchForMatchDetail(matchId);
     }
-
 
 
 }

@@ -3,8 +3,12 @@ package com.example.gamelife.pubg;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,9 +18,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.gamelife.R;
-import com.example.gamelife.leagueoflegends.ui.viewmodel.LolSummonerViewModel;
+import com.example.gamelife.pubg.models.PubgGame;
+import com.example.gamelife.pubg.models.gameData.PubgMatchPlayerStats;
 import com.example.gamelife.pubg.models.playerStats.PubgPlayerStats;
 import com.example.gamelife.pubg.ui.viewmodel.PubgViewModel;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +34,8 @@ public class PubgFragment extends Fragment {
 
     private View rootView;
     private PubgViewModel viewModel;
+    RecyclerView mGameList;
+    PubgGameAdapter mPubgGameAdapter;
 
     private TextView txtUsername;
 
@@ -49,6 +58,8 @@ public class PubgFragment extends Fragment {
     private PubgPlayerStats pubgStats;
 
     private String accountId;
+    private String userName;
+    private ArrayList<PubgGame> games;
 
     public PubgFragment() {
         // Required empty public constructor
@@ -101,9 +112,13 @@ public class PubgFragment extends Fragment {
             accountId = playerInfo.getPlayerId();
             viewModel.searchForPlayerStats(playerInfo.getPlayerId());
             Log.d("Test", "Game data : " + playerInfo.getGameList().get(2).getId());
-            viewModel.searchForMatchData(playerInfo.getGameList().get(2).getId());
-
             viewModel.searchForSeason();
+
+
+            for(int i = 0;i<20;i++){
+                Log.d("test","Match cherché "+ i);
+                viewModel.searchForMatchData(playerInfo.getGameList().get(i).getId());
+            }
         });
 
         viewModel.getSearchedPlayerStats().observe(getViewLifecycleOwner(), pubgPlayerStats -> {
@@ -119,27 +134,61 @@ public class PubgFragment extends Fragment {
         });
 
         viewModel.getSearchedMatchData().observe(getViewLifecycleOwner(),pubgMatchData -> {
-            Log.d("test",pubgMatchData.getPlayerList().get(1).getAttributes().getStats().getName());
+
+
+                    boolean inSearch = true;
+                    for(int j = 0; j<pubgMatchData.getPlayerList().size() && inSearch;j++) {
+                        Log.d("test","Joueur exploré :  "+ j);
+                        try{
+                            if (pubgMatchData.getPlayerList().get(j).getAttributes().getStats().getName().equals(userName)) {
+                                PubgMatchPlayerStats player = pubgMatchData.getPlayerList().get(j).getAttributes().getStats();
+                                inSearch = false;
+
+                                mPubgGameAdapter.addGame(new PubgGame(pubgMatchData.getGameMode(), pubgMatchData.getMatchType(), pubgMatchData.getDuration(),player));
+                                mPubgGameAdapter.notifyItemInserted(mPubgGameAdapter.getItemCount() - 1);
+
+                            }
+                        }catch(Exception e){
+                            //continue
+                        }
+                    }
+
+
         });
 
         viewModel.getSearchedSeason().observe(getViewLifecycleOwner(), pubgSeason -> {
-            Log.d("test",pubgSeason.getId() + " SEASON ID");
             viewModel.searchForRanked(accountId,pubgSeason.getId());
 
         });
 
         viewModel.getSearchedRanked().observe(getViewLifecycleOwner(), pubgRanked -> {
-            Log.d("Test", pubgRanked.getTier() + " RANK");
             txtPoint.setText(pubgRanked.getSquad().getCurrentRankPoint()+"");
             txtKda.setText(String.format("%.2f", pubgRanked.getSquad().getKda()));
-            txtWinPerc.setText((pubgRanked.getSquad().getWinRatio()*100)+"");
-            txtTopTen.setText((pubgRanked.getSquad().getTop10Ratio()*100)+"");
+            txtWinPerc.setText(String.format("%.2f",(pubgRanked.getSquad().getWinRatio()*100)));
+            txtTopTen.setText(String.format("%.2f",(pubgRanked.getSquad().getTop10Ratio()*100)));
             txtRank.setText(pubgRanked.getTier()+pubgRanked.getSubTier());
         });
 
+
+
+        //Declaration and init of the recyclerView and Game Adapter
+        games = new ArrayList<PubgGame>();
+
+
+
+        mGameList = rootView.findViewById(R.id.rvPubg);
+        mGameList.hasFixedSize();
+        mGameList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //A separator is set for each item in the recyclerView
+        DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.separator_rv));
+
+        mGameList.addItemDecoration(itemDecorator);
+        mPubgGameAdapter = new PubgGameAdapter(games);
+        mGameList.setAdapter(mPubgGameAdapter);
+
         searchAccount();
-
-
 
 
         buttonRefresh.setOnClickListener(v -> {
@@ -208,7 +257,7 @@ public class PubgFragment extends Fragment {
     private void searchAccount(){
         //I retrieve in local storage the username for this game
         SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPreferences", 0);
-        String userName = prefs.getString("pubgName", "Enter your username");
+        userName = prefs.getString("pubgName", "Enter your username");
         txtUsername.setText(userName);
 
         viewModel.searchForAccount(userName);
