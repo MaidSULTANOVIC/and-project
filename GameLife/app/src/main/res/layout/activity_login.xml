@@ -95,11 +95,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
         app:layout_constraintVertical_bias="1.0"
+        android:backgroundTint="#DE482F75"
         />
 
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"/>
+        android:text="Register"
+        android:backgroundTint="#DE482F75"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -85,6 +87,9 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
 
         rootView = inflater.inflate(R.layout.fragment_games, container, false);
         games = new ArrayList<>();
+
+        ActionBar bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        bar.setTitle("Games");
 
         FloatingActionButton fab = rootView.findViewById(R.id.floating_action_button);
         txt = rootView.findViewById(R.id.textView2);

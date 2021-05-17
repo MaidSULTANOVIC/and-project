@@ -23,16 +23,9 @@ public class SelectGameActivity extends AppCompatActivity {
         bar.setTitle("Add new game");
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#312051")));
 
-        Button button = findViewById(R.id.button2);
         Button buttonPubg = findViewById(R.id.buttonSelectPubg);
         Button buttonLol = findViewById(R.id.buttonSelectLol);
 
-        button.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(NEW_GAME_NAME, "Fornite");
-            setResult(RESULT_OK, intent);
-            finish();
-        });
 
 
         buttonPubg.setOnClickListener(v -> {

@@ -15,7 +15,8 @@
         android:text="Select a new game to add"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:paddingBottom="15dp"/>
+        android:paddingBottom="15dp"
+        />
 
     <Button
         android:id="@+id/buttonSelectLol"
@@ -23,21 +24,15 @@
         android:layout_height="wrap_content"
         android:text="League of legends"
         tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="91dp" />
-
+        tools:layout_editor_absoluteY="91dp"
+        android:backgroundTint="#DE482F75" />
     <Button
         android:id="@+id/buttonSelectPubg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PUBG"
         tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="91dp" />
+        tools:layout_editor_absoluteY="91dp"
+        android:backgroundTint="#DE482F75"/>
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fornite"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="91dp" />
 </LinearLayout>

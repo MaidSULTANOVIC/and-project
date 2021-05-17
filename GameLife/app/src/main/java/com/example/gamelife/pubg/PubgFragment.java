@@ -3,6 +3,8 @@ package com.example.gamelife.pubg;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -105,6 +107,9 @@ public class PubgFragment extends Fragment {
         buttonDuo = rootView.findViewById(R.id.buttonDuoPubg);
 
 
+
+        ActionBar bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        bar.setTitle("PUBG");
 
         viewModel.getSearchedAccount().observe(getViewLifecycleOwner(),playerInfo -> {
             Log.d("test",playerInfo.getPlayerId());

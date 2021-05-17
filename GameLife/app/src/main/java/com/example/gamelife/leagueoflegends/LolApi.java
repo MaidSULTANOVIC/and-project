@@ -11,16 +11,16 @@ import retrofit2.http.Path;
  */
 public interface LolApi {
 
-        @GET("/lol/summoner/v4/summoners/by-name/{summonerName}?api_key=RGAPI-48bd8999-3b1e-4627-a4b5-109ba0132a0b")
+        @GET("/lol/summoner/v4/summoners/by-name/{summonerName}?api_key=RGAPI-b86ad8d0-d473-4063-88cf-e1deb23cf2c7")
         Call<AccountResponse> getAccount(@Path("summonerName") String name);
 
-        @GET("/lol/league/v4/entries/by-summoner/{encryptedSummonerId}?api_key=RGAPI-48bd8999-3b1e-4627-a4b5-109ba0132a0b")
+        @GET("/lol/league/v4/entries/by-summoner/{encryptedSummonerId}?api_key=RGAPI-b86ad8d0-d473-4063-88cf-e1deb23cf2c7")
         Call<List<LolResponse>> getSummoner(@Path("encryptedSummonerId") String id);
 
-        @GET("/lol/match/v4/matchlists/by-account/{encryptedAccountId}?api_key=RGAPI-48bd8999-3b1e-4627-a4b5-109ba0132a0b")
+        @GET("/lol/match/v4/matchlists/by-account/{encryptedAccountId}?api_key=RGAPI-b86ad8d0-d473-4063-88cf-e1deb23cf2c7")
         Call<MatchListResponse> getMatchList(@Path("encryptedAccountId") String accountId);
 
-        @GET("/lol/match/v4/matches/{matchId}?api_key=RGAPI-48bd8999-3b1e-4627-a4b5-109ba0132a0b")
+        @GET("/lol/match/v4/matches/{matchId}?api_key=RGAPI-b86ad8d0-d473-4063-88cf-e1deb23cf2c7")
         Call<MatchDetailResponse> getMatchDetail(@Path("matchId") long matchId);
 
 
