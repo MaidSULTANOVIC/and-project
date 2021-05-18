@@ -1,6 +1,6 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.api;
 
-import com.example.gamelife.leagueoflegends.models.MatchDetail;
+import com.example.gamelife.leagueoflegends.models.match.MatchDetail;
 import com.example.gamelife.leagueoflegends.models.Participant;
 import com.example.gamelife.leagueoflegends.models.ParticipantIdentities;
 

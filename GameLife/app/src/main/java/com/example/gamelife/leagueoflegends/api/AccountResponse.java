@@ -1,4 +1,4 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.api;
 
 import com.example.gamelife.leagueoflegends.models.LolAccount;
 

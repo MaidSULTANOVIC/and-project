@@ -1,4 +1,4 @@
-package com.example.gamelife.pubg;
+package com.example.gamelife.pubg.ui.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.gamelife.R;
+import com.example.gamelife.pubg.PubgGameAdapter;
 import com.example.gamelife.pubg.models.PubgGame;
 import com.example.gamelife.pubg.models.gameData.PubgMatchPlayerStats;
 import com.example.gamelife.pubg.models.playerStats.PubgPlayerStats;
@@ -68,7 +69,6 @@ public class PubgFragment extends Fragment {
     }
 
 
-    // TODO: Rename and change types and number of parameters
     public static PubgFragment newInstance() {
         PubgFragment fragment = new PubgFragment();
         return fragment;
@@ -78,6 +78,7 @@ public class PubgFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Init ViewModel
         viewModel = new ViewModelProvider(this).get(PubgViewModel.class);
     }
 
@@ -87,6 +88,7 @@ public class PubgFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_pubg, container, false);
 
+        //Init every components
         Button buttonRefresh = rootView.findViewById(R.id.buttonRefreshPubg);
         txtUsername = rootView.findViewById(R.id.editTextPubg);
 
@@ -108,24 +110,39 @@ public class PubgFragment extends Fragment {
 
 
 
+        //init ActionBar and change its title
         ActionBar bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         bar.setTitle("PUBG");
 
+        // When the api call "searchAccount" is called, this function is triggered
         viewModel.getSearchedAccount().observe(getViewLifecycleOwner(),playerInfo -> {
-            Log.d("test",playerInfo.getPlayerId());
 
+            // Save accountId of the user
             accountId = playerInfo.getPlayerId();
+
+            // Begin a new api request with the playerId
             viewModel.searchForPlayerStats(playerInfo.getPlayerId());
-            Log.d("Test", "Game data : " + playerInfo.getGameList().get(2).getId());
+
+            // Begin a new api request to find actual season
             viewModel.searchForSeason();
 
 
-            for(int i = 0;i<20;i++){
-                Log.d("test","Match cherché "+ i);
-                viewModel.searchForMatchData(playerInfo.getGameList().get(i).getId());
+            //If the player played more than 20 games in the last days, it will call searchForMatchData api call for the 20 last games
+            if(playerInfo.getGameList().size() > 20){
+                for(int i = 0;i<20;i++){
+                    viewModel.searchForMatchData(playerInfo.getGameList().get(i).getId());
+                }
             }
+            //Else, it will call for every last games played
+            else{
+                for(int i = 0;i<playerInfo.getGameList().size();i++){
+                    viewModel.searchForMatchData(playerInfo.getGameList().get(i).getId());
+                }
+            }
+
         });
 
+        // Set squad stats and save all the other stats
         viewModel.getSearchedPlayerStats().observe(getViewLifecycleOwner(), pubgPlayerStats -> {
             pubgStats =  pubgPlayerStats;
 
@@ -138,17 +155,20 @@ public class PubgFragment extends Fragment {
 
         });
 
+        // Get data for one match
         viewModel.getSearchedMatchData().observe(getViewLifecycleOwner(),pubgMatchData -> {
 
 
                     boolean inSearch = true;
+                    // Search the current player data
                     for(int j = 0; j<pubgMatchData.getPlayerList().size() && inSearch;j++) {
-                        Log.d("test","Joueur exploré :  "+ j);
+
                         try{
                             if (pubgMatchData.getPlayerList().get(j).getAttributes().getStats().getName().equals(userName)) {
                                 PubgMatchPlayerStats player = pubgMatchData.getPlayerList().get(j).getAttributes().getStats();
                                 inSearch = false;
 
+                                // Add game in gameAdapter
                                 mPubgGameAdapter.addGame(new PubgGame(pubgMatchData.getGameMode(), pubgMatchData.getMatchType(), pubgMatchData.getDuration(),player));
                                 mPubgGameAdapter.notifyItemInserted(mPubgGameAdapter.getItemCount() - 1);
 
@@ -161,11 +181,14 @@ public class PubgFragment extends Fragment {
 
         });
 
+
+        // Search Season, when this function is triggered, it wil lcall for searchForRanked stats with the current season
         viewModel.getSearchedSeason().observe(getViewLifecycleOwner(), pubgSeason -> {
             viewModel.searchForRanked(accountId,pubgSeason.getId());
 
         });
 
+        // Update UI with ranked stats
         viewModel.getSearchedRanked().observe(getViewLifecycleOwner(), pubgRanked -> {
             txtPoint.setText(pubgRanked.getSquad().getCurrentRankPoint()+"");
             txtKda.setText(String.format("%.2f", pubgRanked.getSquad().getKda()));
@@ -176,11 +199,11 @@ public class PubgFragment extends Fragment {
 
 
 
-        //Declaration and init of the recyclerView and Game Adapter
+        //Init of the recyclerView and Game Adapter
         games = new ArrayList<PubgGame>();
 
 
-
+        //Init of the recyclerView
         mGameList = rootView.findViewById(R.id.rvPubg);
         mGameList.hasFixedSize();
         mGameList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -190,36 +213,43 @@ public class PubgFragment extends Fragment {
         itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.separator_rv));
 
         mGameList.addItemDecoration(itemDecorator);
+
+        //Init Adapter and set it to the recyclerView
         mPubgGameAdapter = new PubgGameAdapter(games);
         mGameList.setAdapter(mPubgGameAdapter);
 
+        // Init call to begin api fetch
         searchAccount();
 
-
+        // Function called when the refresh button is clicked
         buttonRefresh.setOnClickListener(v -> {
 
+            //Take value from editText and put it in SharedPreferences
             SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPreferences", this.getActivity().MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putString("pubgName", txtUsername.getText().toString());
             editor.apply();
 
+            //Clear focus and call searchAccount api function
             txtUsername.clearFocus();
             searchAccount();
 
         });
 
-
-
+        // Show Squad stats
         buttonSquad.setOnClickListener(v -> {
 
             refreshGameMode(0);
         });
 
+        // Show Duo stats
         buttonDuo.setOnClickListener(v -> {
 
             refreshGameMode(2);
         });
 
+
+        // Show Solo stats
         buttonSolo.setOnClickListener(v -> {
 
             refreshGameMode(1);
@@ -231,6 +261,7 @@ public class PubgFragment extends Fragment {
     }
 
 
+    // Change stats that is displayed in relation with what user clicked
     private void refreshGameMode(int index){
         //Squad
         if(index == 0){
@@ -259,12 +290,14 @@ public class PubgFragment extends Fragment {
         }
     }
 
+    //Function to search a new account
     private void searchAccount(){
-        //I retrieve in local storage the username for this game
+        //It retrieves in local storage the username for this game
         SharedPreferences prefs = this.getActivity().getSharedPreferences("MyPreferences", 0);
         userName = prefs.getString("pubgName", "Enter your username");
         txtUsername.setText(userName);
 
+        //And call api function that will retrieve data
         viewModel.searchForAccount(userName);
     }
 }

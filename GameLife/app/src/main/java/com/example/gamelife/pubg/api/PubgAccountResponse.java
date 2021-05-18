@@ -1,4 +1,4 @@
-package com.example.gamelife.pubg;
+package com.example.gamelife.pubg.api;
 
 import com.example.gamelife.pubg.models.playerInfo.PlayerData;
 import com.example.gamelife.pubg.models.playerInfo.PlayerInfo;

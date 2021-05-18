@@ -120,6 +120,7 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
                         mGameList = rootView.findViewById(R.id.rv);
                         mGameList.hasFixedSize();
                         mGameList.setLayoutManager(new LinearLayoutManager(getActivity()));
+
                         DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
                         itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.separator_rv));
 

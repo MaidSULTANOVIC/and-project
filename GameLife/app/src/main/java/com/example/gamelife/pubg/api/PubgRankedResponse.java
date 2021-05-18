@@ -1,4 +1,4 @@
-package com.example.gamelife.pubg;
+package com.example.gamelife.pubg.api;
 
 import com.example.gamelife.pubg.models.ranked.PubgRanked;
 import com.example.gamelife.pubg.models.ranked.PubgRankedData;

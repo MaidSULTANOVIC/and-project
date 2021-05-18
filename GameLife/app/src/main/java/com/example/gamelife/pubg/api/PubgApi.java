@@ -1,11 +1,4 @@
-package com.example.gamelife.pubg;
-import com.example.gamelife.leagueoflegends.AccountResponse;
-import com.example.gamelife.leagueoflegends.LolResponse;
-import com.example.gamelife.leagueoflegends.MatchDetailResponse;
-import com.example.gamelife.leagueoflegends.MatchListResponse;
-import com.example.gamelife.pubg.models.gameData.PubgMatchData;
-
-import java.util.List;
+package com.example.gamelife.pubg.api;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,6 +6,11 @@ import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * PubgApi interface
+ *
+ * Most of the query need to have specific Headers in order to work (+ API key in Headers)
+ */
 public interface PubgApi {
 
     @Headers({
@@ -44,7 +42,6 @@ public interface PubgApi {
     })
     @GET("/shards/steam/seasons")
     Call<PubgSeasonResponse> getSeason();
-    //TODO FIX THIS
 
     @Headers({
             "Accept: application/vnd.api+json",

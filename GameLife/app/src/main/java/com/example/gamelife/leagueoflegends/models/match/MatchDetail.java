@@ -1,4 +1,7 @@
-package com.example.gamelife.leagueoflegends.models;
+package com.example.gamelife.leagueoflegends.models.match;
+
+import com.example.gamelife.leagueoflegends.models.Participant;
+import com.example.gamelife.leagueoflegends.models.ParticipantIdentities;
 
 import java.util.ArrayList;
 

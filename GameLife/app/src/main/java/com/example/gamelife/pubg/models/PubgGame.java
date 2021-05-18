@@ -2,6 +2,9 @@ package com.example.gamelife.pubg.models;
 
 import com.example.gamelife.pubg.models.gameData.PubgMatchPlayerStats;
 
+/**
+ * PubgGame contains data for each game that the user played, including player stats
+ */
 public class PubgGame {
     private String mGameMode;
     private String mMatchType;

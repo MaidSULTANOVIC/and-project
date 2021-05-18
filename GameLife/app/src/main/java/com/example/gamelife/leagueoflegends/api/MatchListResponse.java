@@ -1,7 +1,7 @@
-package com.example.gamelife.leagueoflegends;
+package com.example.gamelife.leagueoflegends.api;
 
-import com.example.gamelife.leagueoflegends.models.MatchInfo;
-import com.example.gamelife.leagueoflegends.models.MatchList;
+import com.example.gamelife.leagueoflegends.models.match.MatchInfo;
+import com.example.gamelife.leagueoflegends.models.match.MatchList;
 
 import java.util.ArrayList;
 

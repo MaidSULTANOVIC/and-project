@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.gamelife.leagueoflegends.models.LolAccount;
 import com.example.gamelife.leagueoflegends.LolRepository;
-import com.example.gamelife.leagueoflegends.models.MatchDetail;
-import com.example.gamelife.leagueoflegends.models.MatchList;
+import com.example.gamelife.leagueoflegends.models.match.MatchDetail;
+import com.example.gamelife.leagueoflegends.models.match.MatchList;
 import com.example.gamelife.leagueoflegends.models.Summoner;
 
 /**

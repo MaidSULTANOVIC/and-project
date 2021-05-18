@@ -13,7 +13,7 @@ import com.example.gamelife.pubg.models.season.PubgSeason;
 public class PubgViewModel extends ViewModel {
     PubgRepository repository;
 
-    //Create a new instance of lolRepo
+    //Create a new instance of PubgRepo
     public PubgViewModel(){
         repository = PubgRepository.getInstance();
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pubg.PubgFragment"
+    tools:context=".pubg.ui.fragment.PubgFragment"
     android:background="@color/purple_dark"
     >
 

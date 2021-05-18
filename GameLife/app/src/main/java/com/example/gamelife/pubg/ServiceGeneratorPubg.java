@@ -1,11 +1,13 @@
 package com.example.gamelife.pubg;
 
-import com.example.gamelife.leagueoflegends.LolApi;
+import com.example.gamelife.pubg.api.PubgApi;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGeneratorPubg {
+
+    //Init API with Retrofit
 
     private static Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
             .baseUrl("https://api.pubg.com")

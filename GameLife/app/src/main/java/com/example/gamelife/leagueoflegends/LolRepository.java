@@ -6,9 +6,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.gamelife.ServiceGenerator;
+import com.example.gamelife.leagueoflegends.api.AccountResponse;
+import com.example.gamelife.leagueoflegends.api.LolApi;
+import com.example.gamelife.leagueoflegends.api.LolResponse;
+import com.example.gamelife.leagueoflegends.api.MatchDetailResponse;
+import com.example.gamelife.leagueoflegends.api.MatchListResponse;
 import com.example.gamelife.leagueoflegends.models.LolAccount;
-import com.example.gamelife.leagueoflegends.models.MatchDetail;
-import com.example.gamelife.leagueoflegends.models.MatchList;
+import com.example.gamelife.leagueoflegends.models.match.MatchDetail;
+import com.example.gamelife.leagueoflegends.models.match.MatchList;
 import com.example.gamelife.leagueoflegends.models.Summoner;
 
 import java.util.List;

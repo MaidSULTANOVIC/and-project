@@ -36,6 +36,7 @@ public class PubgGameAdapter extends RecyclerView.Adapter<PubgGameAdapter.ViewHo
         return new PubgGameAdapter.ViewHolder(view);
     }
 
+    //Update RecyclerView item with data
     @Override
     public void onBindViewHolder(@NonNull PubgGameAdapter.ViewHolder holder, int position) {
         PubgMatchPlayerStats player = mGames.get(position).getPlayer();
@@ -52,9 +53,17 @@ public class PubgGameAdapter extends RecyclerView.Adapter<PubgGameAdapter.ViewHo
     }
 
     public void clearGames(){
-        int size = mGames.size();
-        mGames.clear();
-        notifyItemRangeRemoved(0,size);
+        if(mGames != null){
+            int size = mGames.size();
+            mGames.clear();
+            try{
+                notifyItemRangeRemoved(0,size);
+            }catch(Exception e){
+                //continue
+            }
+
+        }
+
     }
 
     @Override

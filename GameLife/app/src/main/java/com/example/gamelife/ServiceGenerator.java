@@ -1,6 +1,6 @@
 package com.example.gamelife;
 
-import com.example.gamelife.leagueoflegends.LolApi;
+import com.example.gamelife.leagueoflegends.api.LolApi;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

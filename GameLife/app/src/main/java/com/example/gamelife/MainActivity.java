@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(myIntent);
             finish();
 
-            //setContentView(R.layout.activity_login);
        }else{
             setContentView(R.layout.activity_main);
 
