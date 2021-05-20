@@ -1,21 +1,36 @@
-# and-project
+# GameLife - And-Project
 
 The main idea of the project is an app that is used to store the user's game profile. It will contain different game that the user can select. Then he can click on the game and it will provide him his stats on this game and if possible some more data (like last games)
 
-You can see presentation fo the app here : https://www.youtube.com/watch?v=qbP-b6ImJlM
+You can see presentation of the app here : https://www.youtube.com/watch?v=qbP-b6ImJlM
+
+___
+
+### Initial requirements :
+
+**Must have** :  
+- [X] Have a system to store user game profiles  
+- [X] Show you data / stats from the selected game via an API  
+- [X] A refresh system so the data from the game will always be updated  
+- [X] Let the user add which game he wants to add on its profile
+- [X] Secure user data that are stored in database (Firebase)
+ 
+**Should have** :  
+- [X] Settings to change game data (user's username for the game)  
+- [X] A user login/logout system   
+- [X] Allow user to delete each game profile
+ 
+**Could have** :  
+- [ ] Theme modification  
+
+**Won't have** :  
+- [ ] Add custom games 
+
+___
 
 
-Must have : 
-Have a system to store user game profiles
-Show you data / stats from the selected game via an API
-A refresh system so the data from the game will always be updated
+### Images
 
-Should have :
-Settings to change game data (user's username for the game)
-A user login/logout system 
+![Picture homepage](https://cdn.discordapp.com/attachments/764647594667933727/844936438779740180/unknown.png) ![Picture LOL](https://cdn.discordapp.com/attachments/764647594667933727/844936855963303997/unknown.png) ![Picture PUBG](https://cdn.discordapp.com/attachments/764647594667933727/844936934366642226/unknown.png)
 
-Could have:
-Theme modification
 
-Won't have :
-Add custom games 
