@@ -39,6 +39,15 @@ ___
 
 ![Picture homepage](https://cdn.discordapp.com/attachments/764647594667933727/844936438779740180/unknown.png) ![Picture LOL](https://cdn.discordapp.com/attachments/764647594667933727/844936855963303997/unknown.png) ![Picture PUBG](https://cdn.discordapp.com/attachments/764647594667933727/844936934366642226/unknown.png)
 
+### Reference  
+
+In order to save some time, I took a list of league of legends champions ID from someone that did it before.  
+But these data are available on Riot Games API and I had to finish the list of ID because his list wasn't complete.  
+
+You can find his work here : https://github.com/ynk/League-Champion-ID  
+I could do this myself manually but there are 155 champions in League of Legends and doing it by hand was going to take me a long time.  
+It is just a switch case with 155 case possible, one for each champion.
+
 ### Other
 
 Developed by Maid Sultanovic for the AND1 Project at VIA University College.  
