@@ -2,6 +2,8 @@ package com.example.gamelife;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
+import com.example.gamelife.ui.view.LoginActivity;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.example.gamelife;
+package com.example.gamelife.ui.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,23 +20,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gamelife.Game;
+import com.example.gamelife.GameAdapter;
+import com.example.gamelife.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
@@ -44,25 +38,22 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link GamesFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * This fragment contains the homepage, so it will display the user's selected games
  */
-public class GamesFragment extends Fragment implements GameAdapter.OnListItemClickListener{
+public class GamesFragment extends Fragment implements GameAdapter.OnListItemClickListener {
 
+    private RecyclerView mGameList;
+    private GameAdapter mGameAdapter;
+    private View rootView;
 
-
-    RecyclerView mGameList;
-    GameAdapter mGameAdapter;
-    View rootView;
-
-    DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference dataGame = myRef.child("condition");
-    TextView txt;
-    Object temp;
-    ArrayList<Game> games;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //Init database reference
+    private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    private TextView txt;
+    private Object temp;
+    private ArrayList<Game> games;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public GamesFragment() {
         // Required empty public constructor
@@ -88,18 +79,21 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
         rootView = inflater.inflate(R.layout.fragment_games, container, false);
         games = new ArrayList<>();
 
+        //Init actionBar and change title
         ActionBar bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         bar.setTitle("Games");
 
+        //Init components of the fragment
         FloatingActionButton fab = rootView.findViewById(R.id.floating_action_button);
         txt = rootView.findViewById(R.id.textView2);
         temp = this;
 
         mGameAdapter = new GameAdapter(games,this::onListItemClick);
 
+        //Create a new document for the user collection (if it doesn't exist yet)
         db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(new HashMap<String,Object>(),SetOptions.merge());
 
-
+        // Retrieves user's games
         db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -108,6 +102,7 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
 
+                        // For each game that the user has, it will add it to a list of games to be displayed in recyclerView
                         Iterator it = document.getData().entrySet().iterator();
                         while (it.hasNext()) {
                             Map.Entry pair = (Map.Entry)it.next();
@@ -116,7 +111,7 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
                         }
 
 
-
+                        // Then, init recyclerView and set adapter in it.
                         mGameList = rootView.findViewById(R.id.rv);
                         mGameList.hasFixedSize();
                         mGameList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -130,23 +125,17 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
 
 
                     } else {
-                        Log.d("oui", "No such document");
+                        Log.d("Firebase", "No such document");
                     }
                 } else {
-                    Log.d("oui", "get failed with ", task.getException());
+                    Log.d("Firebase", "get failed with ", task.getException());
                 }
 
             }
         });
 
-        Map<String, Object> gamesData = new HashMap<>();
-        gamesData.put("lol", "League of legends");
-        gamesData.put("pubg", "PUBG");
-        gamesData.put("ow", "Overwatch");
 
-        // Add a new document with a UID
-       // db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(gamesData);
-
+        // When the user clicks on the floating action button, it will change activity waiting for a result
         fab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SelectGameActivity.class);
@@ -168,28 +157,36 @@ public class GamesFragment extends Fragment implements GameAdapter.OnListItemCli
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == -1) {
-                Log.d("TEST", data.getStringExtra(SelectGameActivity.NEW_GAME_NAME));
+
+                //When the result come back, the game that the user selected wll be inserted in recycler view
                 String strGame = data.getStringExtra(SelectGameActivity.NEW_GAME_NAME);
                 mGameAdapter.addGame(new Game(strGame));
                 mGameAdapter.notifyItemInserted(mGameAdapter.getItemCount()-1);
-                Log.d("TEST", "on est là");
 
                 Map<String, Object> newGame = new HashMap<>();
                 newGame.put(strGame.substring(0,2),strGame);
 
+                //Then, this game will be added to the database of the user profile
                 db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(
                         newGame, SetOptions.merge()
                 );
+
+                // To finish, a toast is displayed to notify the user that a game has been added
                 Toast.makeText(getActivity(), "Game added", Toast.LENGTH_SHORT).show();
             }
         }
     }
     @Override
     public void onListItemClick(int clickedItemIndex) {
+
+        //When the user click on an item of the recyclerView, it will change the view in relation of the item clicked
         String mGameName = mGameAdapter.getGame(clickedItemIndex).getName();
+
+        // if League of legends is clicked, it will show him lol fragment
         if(mGameName.equals("League of legends")){
             Navigation.findNavController(getView()).navigate(R.id.action_gamesFragment_to_lolFragment);
-        }else if(mGameName.equals("PUBG")){
+
+        }else if(mGameName.equals("PUBG")){ // if PUBG is clicked, it will show him pubg fragment
             Navigation.findNavController(getView()).navigate(R.id.action_gamesFragment_to_pubgFragment);
         }
     }

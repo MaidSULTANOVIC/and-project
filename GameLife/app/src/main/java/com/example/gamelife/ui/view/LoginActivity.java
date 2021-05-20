@@ -1,4 +1,4 @@
-package com.example.gamelife;
+package com.example.gamelife.ui.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.gamelife.MainActivity;
+import com.example.gamelife.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //Change ActionBar title and color
         ActionBar bar = getSupportActionBar();
         bar.setTitle("Welcome to GameLife !");
         bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#312051")));
@@ -56,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = (Button) findViewById(R.id.buttonLogin);
 
 
+        //If the user clicks on loginButton
         loginButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //If the user clicks on Register Button
         registerButton.setOnClickListener(v -> {
             createAccount(mailTxt.getText().toString(), passwordTxt.getText().toString());
         });
@@ -72,17 +77,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
-
-
-        }
-
     }
 
+    //This function allows the user to create a new account
     public void createAccount(String email, String password){
         try{
+            //It will call a function from FirebaseAuthentication
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -103,23 +103,28 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
         }catch (Exception e){
+            //Show the error message in case the user triggered Exception
             txtError.setText("Username/Password error");
             txtError.setVisibility(VISIBLE);
         }
 
     }
 
+    //This function allows the user to login with his credentials
     public void loginAccount(String email, String password){
         try{
+            //With the username and password the user wrote, it will connect him
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        //If he successfully logged in, it will change the view and show him the home page
                         Intent myIntent = new Intent(context, MainActivity.class);
                         startActivity(myIntent);
                         finish();
 
                     } else {
+                        //Else it will show message error
                         txtError.setText(task.getException().getMessage());
                         txtError.setVisibility(VISIBLE);
                     }

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/gamesFragment"
-        android:name="com.example.gamelife.GamesFragment"
+        android:name="com.example.gamelife.ui.view.GamesFragment"
         android:label="fragment_games"
         tools:layout="@layout/fragment_games" >
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.gamelife.SettingsFragment"
+        android:name="com.example.gamelife.ui.view.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment

@@ -3,7 +3,7 @@ package com.example.gamelife;
 public class Game {
     private String mName;
 
-    Game(String name){
+    public Game(String name){
         mName = name;
     }
 

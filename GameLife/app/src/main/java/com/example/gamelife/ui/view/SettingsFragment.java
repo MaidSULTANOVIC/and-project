@@ -1,8 +1,6 @@
-package com.example.gamelife;
+package com.example.gamelife.ui.view;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,13 +8,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.gamelife.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,7 +24,6 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class SettingsFragment extends Fragment {
@@ -56,10 +53,13 @@ public class SettingsFragment extends Fragment {
 
 
         rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        //Init settings button
         Button btnLogout = rootView.findViewById(R.id.buttonLogout);
         Button btnLol = rootView.findViewById(R.id.buttonRmLol);
         Button btnPubg = rootView.findViewById(R.id.buttonRmPubg);
 
+        // Update ActionBar Title
         ActionBar bar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         bar.setTitle("Settings");
 
@@ -89,12 +89,16 @@ public class SettingsFragment extends Fragment {
                                 put("Le", FieldValue.delete());
                             }
                         }).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                            //When the deletion is completed it will show a snackbar that allows the user to undo its action
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 Snackbar snackbar = Snackbar.make(rootView.findViewById(R.id.positionSnackbar), "Game deleted", Snackbar.LENGTH_SHORT);
                                 snackbar.setAction("Undo", new View.OnClickListener(){
                                     @Override
                                     public void onClick(View v) {
+
+                                        // If the user wants to undo its action, the previous game that was deleted is added again in database
                                         db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update(new HashMap<String, Object>() {
                                             {
                                                 put("Le", "League of legends");
@@ -106,6 +110,8 @@ public class SettingsFragment extends Fragment {
                         });
 
                     }else{
+
+                        //If the user doesn't have this game in his database, a toast is shown
                         Toast.makeText(getActivity(),"You don't have this game", Toast.LENGTH_SHORT).show();
                     }
 
@@ -115,6 +121,7 @@ public class SettingsFragment extends Fragment {
         });
 
 
+        // Same principle for PUBG button
         btnPubg.setOnClickListener(v -> {
             db.collection("games").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override

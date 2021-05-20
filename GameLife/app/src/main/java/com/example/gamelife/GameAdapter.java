@@ -16,7 +16,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder>{
     private ArrayList<Game> mGames;
     final private OnListItemClickListener mOnListItemClickListener;
 
-    GameAdapter(ArrayList<Game> games, OnListItemClickListener listener){
+    public GameAdapter(ArrayList<Game> games, OnListItemClickListener listener){
         mGames = games;
         mOnListItemClickListener = listener;
 

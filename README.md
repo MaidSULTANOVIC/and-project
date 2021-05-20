@@ -1,12 +1,18 @@
 # GameLife - And-Project
 
-The main idea of the project is an app that is used to store the user's game profile. It will contain different game that the user can select. Then he can click on the game and it will provide him his stats on this game and if possible some more data (like last games)
+### Description  
+The main idea of the project is an app that is used to store the user's game profile. It will contain different game that the user can select. Then he can click on the game and it will provide him his stats on this game and if possible some more data (like last games).  
+  
+### Motivation    
+As a video games user, I really like to see how I perform on these video games, this is why I tought it will be nice to make this app to allow users like me to be able to track their game stats and performance in only one app.
 
+
+### App presentation
 You can see presentation of the app here : https://www.youtube.com/watch?v=qbP-b6ImJlM
 
 ___
 
-### Initial requirements :
+### Requirements :
 
 **Must have** :  
 - [X] Have a system to store user game profiles  
@@ -33,4 +39,8 @@ ___
 
 ![Picture homepage](https://cdn.discordapp.com/attachments/764647594667933727/844936438779740180/unknown.png) ![Picture LOL](https://cdn.discordapp.com/attachments/764647594667933727/844936855963303997/unknown.png) ![Picture PUBG](https://cdn.discordapp.com/attachments/764647594667933727/844936934366642226/unknown.png)
 
+### Other
 
+Developed by Maid Sultanovic for the AND1 Project at VIA University College.  
+  
+Made with Android Studio in Java.
